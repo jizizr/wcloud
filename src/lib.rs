@@ -1,6 +1,6 @@
 use ab_glyph::{point, Font, FontVec, Glyph, Point, PxScale};
 use image::{GrayImage, Luma, Rgba, RgbaImage};
-use palette::{Hsl, IntoColor, Pixel, Srgb};
+use palette::{Hsl, IntoColor, Srgb};
 use std::path::PathBuf;
 use std::process::exit;
 use std::{collections::HashMap, fs};
@@ -519,7 +519,7 @@ fn random_color_rgba(_word: &Word, rng: &mut WyRand) -> Rgba<u8> {
     let col = Hsl::new(hue as f32, 1.0, 0.5);
     let rgb: Srgb = col.into_color();
 
-    let raw: [u8; 3] = rgb.into_format().into_raw();
+    let raw: [u8; 3] = rgb.into_format().into();
 
     Rgba([raw[0], raw[1], raw[2], 1])
 }
