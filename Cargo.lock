@@ -1769,7 +1769,7 @@ dependencies = [
 [[package]]
 name = "woff2"
 version = "0.3.0"
-source = "git+https://github.com/isaackd/woff2-rs.git#6560fea81b97b4c6660d0c5a68b4c37f24a4dd78"
+source = "git+https://github.com/jizizr/woff2-rs.git#cbbaf3bbe80c66a21ee6795efdcfbd5acc29cf27"
 dependencies = [
  "bitvec",
  "brotli",
