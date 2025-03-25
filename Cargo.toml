@@ -16,7 +16,7 @@ image = "0.25"
 palette = "0.7"
 clap = "4.0"
 csscolorparser = "0.6.2"
-woff2 = { git = "https://github.com/jizizr/woff2-rs.git" }
+woff2 = { git = "https://github.com/msarcev/woff2-rs" }
 nanorand = "0.7.0"
 
 serde = { version = "1.0.164", optional = true }
