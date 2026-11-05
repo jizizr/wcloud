@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use wcloud::{Tokenizer, WordCloud, WordCloudSize, Word, DEFAULT_EXCLUDE_WORDS_TEXT};
 use nanorand::{Rng, WyRand};
-use palette::{Pixel, Srgb, Hsl, IntoColor};
+use palette::{Srgb, Hsl, IntoColor};
 use image::{ImageFormat, Rgba};
 
 use std::time::Instant;
@@ -63,8 +63,7 @@ fn main() {
         let col = Hsl::new(136.0, saturation, 0.5);
         let rgb: Srgb = col.into_color();
 
-        let raw: [u8; 3] = rgb.into_format()
-            .into_raw();
+        let raw: [u8; 3] = rgb.into_format().into();
 
         Rgba([raw[0], raw[1], raw[2], 1])
     };
