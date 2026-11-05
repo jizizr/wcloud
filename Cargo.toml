@@ -8,23 +8,22 @@ edition = "2021"
 [profile.release]
 debug = true
 
-# TODO: Have only the binary depending on clap
 [dependencies]
 regex = "1.7.3"
 ab_glyph = "0.2.20"
-image = "0.25"
+# Only the pixel buffers: decoding and encoding are left to the caller.
+image = { version = "0.25", default-features = false }
 palette = "0.7"
-clap = "4.0"
-csscolorparser = "0.6.2"
 woff2 = { git = "https://github.com/msarcev/woff2-rs" }
-nanorand = "0.7.0"
+nanorand = "0.8"
 
 serde = { version = "1.0.164", optional = true }
 serde_derive = { version = "1.0.164", optional = true }
 serde_json = { version = "1.0.99", optional = true }
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = { version = "0.8", features = ["html_reports"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
 
 [[bench]]
 name = "create_wordcloud"

@@ -2,13 +2,11 @@ use std::{fs, iter};
 use std::collections::HashSet;
 use std::time::Duration;
 use wcloud::{Tokenizer, WordCloud, WordCloudSize, Word, DEFAULT_EXCLUDE_WORDS_TEXT, sat};
-use rand::{Rng, SeedableRng};
-use rand::rngs::StdRng;
-use palette::{Pixel, Srgb, Hsl, IntoColor};
-use image::Rgb;
+use nanorand::{Rng, WyRand};
+use palette::{Srgb, Hsl, IntoColor};
+use image::Rgba;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput, BenchmarkId};
-use rand::seq::SliceRandom;
 use wcloud::sat::to_summed_area_table;
 
 
@@ -45,16 +43,15 @@ pub fn wcloud(c: &mut Criterion) {
         let mask_image = image::open(mask_path).unwrap().to_luma8();
         let mask = WordCloudSize::FromMask(mask_image);
 
-        let color_func = |_word: &Word, rng: &mut StdRng| {
-            let lightness = rng.gen_range(0.4..1.0);
+        let color_func = |_word: &Word, rng: &mut WyRand| {
+            let lightness = 0.4 + 0.6 * rng.generate::<f32>();
 
             let col = Hsl::new(0.0, 0.0, lightness);
             let rgb: Srgb = col.into_color();
 
-            let raw: [u8; 3] = rgb.into_format()
-                .into_raw();
+            let raw: [u8; 3] = rgb.into_format().into();
 
-            Rgb(raw)
+            Rgba([raw[0], raw[1], raw[2], 255])
         };
 
         wordcloud.generate_from_text_with_color_func(&script_text, mask, black_box(1.0), color_func)
@@ -68,12 +65,12 @@ pub fn sat(c: &mut Criterion) {
     group.sample_size(10);
 
     let table_sizes = [(10, 10), (100, 100), (1000, 1000), (1920, 1080), (2560, 1440), (3840, 2160)];
-    let mut rng = StdRng::seed_from_u64(1);
+    let mut rng = WyRand::new_seed(1);
 
     for size in table_sizes {
         group.throughput(Throughput::Bytes(size.0 * size.1));
         group.bench_with_input(BenchmarkId::from_parameter(size.0 * size.1), &(size.0 * size.1), |b, &table_len| {
-            let mut table: Vec<u32> = (0..table_len).map(|_| rng.gen_range(0..=255))
+            let mut table: Vec<u32> = (0..table_len).map(|_| rng.generate_range(0..=255u32))
                 .collect();
             b.iter(|| sat::to_summed_area_table(&mut table, size.0 as usize, 0));
         });
