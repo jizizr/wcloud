@@ -113,7 +113,7 @@ impl<'a> Tokenizer {
     pub fn get_normalized_word_frequencies_from_map(
         &'a self,
         frequencies: HashMap<&'a str, usize>,
-    ) -> Vec<(&str, f32)> {
+    ) -> Vec<(&'a str, f32)> {
         if frequencies.is_empty() {
             return Vec::new();
         }

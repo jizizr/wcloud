@@ -352,7 +352,7 @@ impl WordCloud {
 
             let pos = loop {
                 glyphs = text::text_to_glyphs(word, &self.font, PxScale::from(font_size));
-                let glyphs_height = self.glyphs_height(&glyphs.glyphs);
+                let _glyphs_height = self.glyphs_height(&glyphs.glyphs);
 
                 let rect = if !should_rotate {
                     Rect {

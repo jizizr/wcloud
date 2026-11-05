@@ -1,5 +1,5 @@
 use ab_glyph::{point, Font, Glyph, Point, PxScale, ScaleFont, FontVec};
-use image::{GrayImage, Luma, Pixel, Rgb, Rgba, RgbaImage, RgbImage};
+use image::{GrayImage, Luma, Pixel, Rgba, RgbaImage};
 
 #[derive(Clone, Debug)]
 pub struct GlyphData {
